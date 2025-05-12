@@ -1,14 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[13]:
-
-
-
-
-# In[12]:
-
-
 import streamlit as st
 import yfinance as yf
 import pandas as pd
@@ -17,8 +6,6 @@ import plotly.graph_objs as go
 from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import LSTM, Dense
-
-
 
 # Streamlit UI setup
 st.set_page_config(layout="wide")
@@ -37,11 +24,12 @@ def load_data(ticker, start, end):
 
 df = load_data(ticker, start_date, end_date)
 
+
 # Check if data is loaded
 if df.empty:
     st.error("Failed to load data. Check the stock ticker or internet connection.")
     st.stop()
-
+st.dataframe(df.tail(), use_container_width=True)
 st.subheader(f"{ticker} Closing Price")
 st.line_chart(df['Close'])
 
@@ -86,8 +74,3 @@ fig.add_trace(go.Scatter(y=actual_prices.flatten(), name="Actual"))
 fig.add_trace(go.Scatter(y=predicted_prices.flatten(), name="Predicted"))
 fig.update_layout(title="📉 Actual vs Predicted Closing Price", xaxis_title="Time", yaxis_title="Price")
 st.plotly_chart(fig, use_container_width=True)
-
-
-
-
-
